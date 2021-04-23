@@ -1,0 +1,8 @@
+<launch>
+    <include file="$(find nav_demo)/launch/nav05_path.launch" />
+
+    <!-- <group ns="test">
+        <include file="$(find nav_demo)/launch/nav05_path.launch" />
+    </group> -->
+
+</launch>

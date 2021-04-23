@@ -1,0 +1,14 @@
+<launch>
+
+    <node pkg="move_base" type="move_base" respawn="false" name="car1_move_base" output="screen" clear_params="true">
+        <remap from="map" to="/map" />
+        
+        <rosparam file="$(find nav_demo)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find nav_demo)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find nav_demo)/param/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find nav_demo)/param/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find nav_demo)/param/base_local_planner_params.yaml" command="load" />
+        <remap from="/cmd_vel" to="/car1/cmd_vel" />
+    </node>
+
+</launch>

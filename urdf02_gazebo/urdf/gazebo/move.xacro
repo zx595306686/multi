@@ -1,0 +1,61 @@
+<robot name="my_car_move" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <!-- 传动实现:用于连接控制器与关节 -->
+    <xacro:macro name="joint_trans" params="joint_name">
+        <!-- Transmission is important to link the joints and the controller -->
+        <transmission name="${joint_name}_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint_name}">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${joint_name}_motor">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
+    <!-- 每一个驱动轮都需要配置传动装置 -->
+    <xacro:joint_trans joint_name="${ns}left2link" />
+    <xacro:joint_trans joint_name="${ns}right2link" />
+
+    <!-- 控制器 -->
+    <gazebo>
+        <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+            <rosDebugLevel>Debug</rosDebugLevel>
+            <publishWheelTF>true</publishWheelTF>
+            <robotNamespace>/</robotNamespace>
+            <publishTf>1</publishTf>
+            <publishWheelJointState>true</publishWheelJointState>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>100.0</updateRate>
+            <legacyMode>true</legacyMode>
+            <leftJoint>${ns}left2link</leftJoint> <!-- 左轮 -->
+            <rightJoint>${ns}right2link</rightJoint> <!-- 右轮 -->
+            <wheelSeparation>${base_radius * 2}</wheelSeparation> <!-- 车轮间距 -->
+            <wheelDiameter>${wheel_radius * 2}</wheelDiameter> <!-- 车轮直径 -->
+            <broadcastTF>1</broadcastTF>
+            <wheelTorque>30</wheelTorque>
+            <wheelAcceleration>1.8</wheelAcceleration>
+            <commandTopic>${ns}/cmd_vel</commandTopic> <!-- 运动控制话题 -->
+            <odometryFrame>${ns}odom</odometryFrame> 
+            <odometryTopic>${ns}/odom</odometryTopic> <!-- 里程计话题 -->
+            <robotBaseFrame>${ns}base_footprint</robotBaseFrame> <!-- 根坐标系 -->
+        </plugin>
+    </gazebo>
+
+    <!-- 添加获取机器人位姿的插件 -->
+    <gazebo>
+      <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50.0</updateRate>
+        <bodyName>${ns}base_footprint</bodyName>
+        <topicName>base_pose_ground_truth</topicName>
+        <gaussianNoise>0.0</gaussianNoise>
+        <frameName>map</frameName>
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+      </plugin>
+    </gazebo>
+
+</robot>

@@ -1,0 +1,44 @@
+ <!-- 
+    需求:在 gazebo 中显示多个机器人模型
+ -->
+<launch>
+    <!-- 方式:使用 tf_prefix, 不可行,两个机器人使用相同的 tf-->
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- 1.启动Gazebo仿真环境 -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find urdf02_gazebo)/worlds/box_house.world" />
+    </include>
+
+    <!-- 2.分组显示不同的机器人模型 -->
+    <group ns="car1">
+        <param name="robot_description" command="$(find xacro)/xacro $(find urdf02_gazebo)/urdf/car.urdf.xacro ns:=car1" />
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" args="-urdf -model car1 -param robot_description -x 0 -y 0 -z 0" />
+        <!-- 添加关节状态发布节点 -->
+        <node pkg="joint_state_publisher" name="joint_state_publisher" type="joint_state_publisher" />
+        <!-- 添加机器人状态发布节点 -->
+        <node pkg="robot_state_publisher" name="robot_state_publisher" type="robot_state_publisher" />
+
+    </group>
+
+    <group ns="car2">
+        <param name="robot_description" command="$(find xacro)/xacro $(find urdf02_gazebo)/urdf/car.urdf.xacro ns:=car2" />
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" args="-urdf -model car2 -param robot_description -x -1 -y 0 -z 0" />
+        <!-- 添加关节状态发布节点 -->
+        <node pkg="joint_state_publisher" name="joint_state_publisher" type="joint_state_publisher" />
+        <!-- 添加机器人状态发布节点 -->
+        <node pkg="robot_state_publisher" name="robot_state_publisher" type="robot_state_publisher" />
+
+    </group>
+
+    <group ns="car3">
+        <param name="robot_description" command="$(find xacro)/xacro $(find urdf02_gazebo)/urdf/car.urdf.xacro ns:=car3" />
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" args="-urdf -model car3 -param robot_description -x -3 -y 0 -z 0" />
+        <!-- 添加关节状态发布节点 -->
+        <node pkg="joint_state_publisher" name="joint_state_publisher" type="joint_state_publisher" />
+        <!-- 添加机器人状态发布节点 -->
+        <node pkg="robot_state_publisher" name="robot_state_publisher" type="robot_state_publisher" />
+
+    </group>
+
+    
+</launch> 
