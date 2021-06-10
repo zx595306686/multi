@@ -1,0 +1,26 @@
+digraph G {
+"car3base_link" -> "car3lidar"[label=" Broadcaster: /car3/car3_lidar2base\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car1base_link" -> "car1lidar"[label=" Broadcaster: /car1/car1_lidar2base\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car1odom" -> "car1base_link"[label=" Broadcaster: /car1/autolabor_driver\nAverage rate: 10.203\nBuffer length: 4.803\nMost recent transform: 1622358900.28\nOldest transform: 1622358895.47\n"];
+"car1base_link" -> "car1lidar_back"[label=" Broadcaster: /car1/robot_state_publisher\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car2base_link" -> "car2lidar_front"[label=" Broadcaster: /car2/robot_state_publisher\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car2kinect_link" -> "car2kinect2_ir_optical_frame"[label=" Broadcaster: /car2/kinect_to_camera\nAverage rate: 1.25\nBuffer length: 4.0\nMost recent transform: 1622358900.62\nOldest transform: 1622358896.62\n"];
+"car2base_link" -> "car2tag"[label=" Broadcaster: /car2/robot_state_publisher\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car3odom" -> "car3base_link"[label=" Broadcaster: /car3/autolabor_driver\nAverage rate: 10.208\nBuffer length: 4.8\nMost recent transform: 1622358900.27\nOldest transform: 1622358895.47\n"];
+"car1base_link" -> "car1tag"[label=" Broadcaster: /car1/robot_state_publisher\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car2base_link" -> "car2kinect_link"[label=" Broadcaster: /car2/base_link_to_kinect_link\nAverage rate: 1.25\nBuffer length: 4.0\nMost recent transform: 1622358900.62\nOldest transform: 1622358896.62\n"];
+"car1kinect_link" -> "car1kinect2_ir_optical_frame"[label=" Broadcaster: /car1/kinect_to_camera\nAverage rate: 1.25\nBuffer length: 4.001\nMost recent transform: 1622358901.12\nOldest transform: 1622358897.12\n"];
+"car3base_link" -> "car3tag"[label=" Broadcaster: /car3/robot_state_publisher\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car3base_link" -> "car3lidar_front"[label=" Broadcaster: /car3/robot_state_publisher\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car1base_link" -> "car1lidar_front"[label=" Broadcaster: /car1/robot_state_publisher\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car2base_link" -> "car2lidar_back"[label=" Broadcaster: /car2/robot_state_publisher\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"car2base_link" -> "car2lidar"[label=" Broadcaster: /car2/car2_lidar2base\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"map" -> "car3odom"[label=" Broadcaster: /car3/car3amcl\nAverage rate: 10.488\nBuffer length: 4.767\nMost recent transform: 1622358900.32\nOldest transform: 1622358895.56\n"];
+"car3base_link" -> "car3lidar_back"[label=" Broadcaster: /car3/robot_state_publisher\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"map" -> "car1odom"[label=" Broadcaster: /car1/car1amcl\nAverage rate: 9.926\nBuffer length: 4.836\nMost recent transform: 1622358900.37\nOldest transform: 1622358895.53\n"];
+"car1base_link" -> "car1kinect_link"[label=" Broadcaster: /car1/base_link_to_kinect_link\nAverage rate: 1.25\nBuffer length: 4.0\nMost recent transform: 1622358901.11\nOldest transform: 1622358897.11\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1622358900.36"[ shape=plaintext ] ;
+}->"map";
+}

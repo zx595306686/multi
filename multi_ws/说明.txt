@@ -1,0 +1,63 @@
+多车协同描述:
+  1.可以实现多车线性组队，头车可以自主导航至给定的目标点，其他车辆也可以实现自主导航，依次跟随前车运行；	
+  2.跟随规则:可以制定不同车辆之间的间距，且间距大于某个阈值时，后车可以加速追赶，小于某个阈值则减速，间距在某个范围内时，正常运行即可。
+  3.所有车辆均有自主导航以及避障功能。
+
+多车协同操作:准备工作(该步骤实现一次即可)
+实现SLAM建图并保存
+  1.进入工作空间
+  cd multi_ws
+  source ./devel/setup.bash
+  2.创建静态地图
+  roslaunch multi_navigation create_map.launch 使用 gmapping 创建地图
+  3.启动键盘控制节点，控制机器人运动并建图
+  roslaunch multi_navigation teleop_twist.launch 
+  4.保存地图
+  roslaunch multi_navigation map_save.launch 保存创建完毕的地图
+多车协同操作:组队实现
+  1.进入工作空间
+  cd multi_ws
+  source ./devel/setup.bash
+  2.分别执行主从机的导航功能
+  roslaunch multi_navigation navigation.launch 
+  3.调整不同机器人的位姿
+  需要在 rviz 中调整，并且最好使用键盘控制机器人运动一段距离，增加机器人定位的准确性；
+  4.分别执行主从机的组队功能
+  roslaunch multi_navigation linked_cars.launch 
+  5.在 rviz 中给主机设置一个目标点，主机将自主导航至目标殿，其他机器人将跟随前进。
+
+---------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------
+功能包以及文件介绍:
+ira_laser_tools: 多雷达融合功能包
+	|--- 该包源码已做修改，laserscan_multi_merger.cpp 文件中，加入了休眠语句，否则可能无法正常订阅指定的雷达话题。
+multi_description: xacro描述文件功能包
+multi_driver: 底盘以及传感器启动
+	|--- launch 文件均为测试文件
+	     |---- multi_driver.launch 以分组的方式启动底盘、雷达、并实现雷达融合;
+	     |---- multi_driver_nogroup.launch 启动底盘、雷达、并实现雷达融合的通用launch文件;
+	     |---- multi_merger.launch 雷达融合实现(测试使用);
+
+multi_navigation: 导航功能包
+	|--- map 目录用于保存地图
+	|--- launch 文件（核心）
+	     |---- teleop_twist.launch 启动键盘控制节点(实现了话题重映射);
+	     |---- create_map.launch SLAM建图相关节点;
+	     |---- map_save.launch 地图保存节点;
+	     |---- map_server.launch 读取并发布地图消息节点;
+	     |---- amcl.launch 定位节点;
+	     |---- multi/navigation.launch 导航实现节点(集成xacro解析、底盘启动、地图服务、定位...)
+	     |---- multi/linked_cars.launch 组队实现，可以设置当前车的跟随参数，也可以为后车发送目标点
+
+---------------------------------------------------------------------------------------------------
+PS:
+	多车导航时需要使用 ROS 分布式通信,具体实现流程请参考:
+	http://www.autolabor.com.cn/book/ROSTutorials/5/44-rosfen-bu-shi-tong-xin.html
+---------------------------------------------------------------------------------------------------
+	
+
+	
+	
+
+	

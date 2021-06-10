@@ -1,0 +1,2 @@
+ira_laser_tools:multi_description:multi_driver:multi_navigation
+-DCATKIN_DEVEL_PREFIX=/home/autolabor/multi_ws/devel -DCMAKE_INSTALL_PREFIX=/home/autolabor/multi_ws/install -G Unix Makefiles

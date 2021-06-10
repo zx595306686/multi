@@ -1,0 +1,8 @@
+prefix=/home/autolabor/multi_ws/install
+
+Name: ira_laser_tools
+Description: Description of ira_laser_tools
+Version: 1.0.4
+Cflags: -I/home/autolabor/multi_ws/install/include
+Libs: -L/home/autolabor/multi_ws/install/lib 
+Requires: 
